@@ -1,0 +1,28 @@
+body {
+    background-color: #f8f9fa;
+  }
+  
+  .card {
+    border-radius: 8px;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  h3.card-title {
+    font-weight: 600;
+  }
+  
+  .btn {
+    padding: 10px;
+  }
+  
+  a {
+    color: #007bff;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

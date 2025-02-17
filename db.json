@@ -1,0 +1,87 @@
+{
+  "users": [
+    {
+      "id": "cbf8",
+      "firstName": "Roshan",
+      "lastName": "Shrestha",
+      "email": "roshan.stha399@gmail.com",
+      "password": "Roshan@1",
+      "phone": "9862264674",
+      "address": "Nayabazar",
+      "postalCode": "1234"
+    },
+    {
+      "id": "276b",
+      "firstName": "Nabin",
+      "lastName": "Joshi",
+      "email": "nabinjoshi400@gmail.com",
+      "password": "N@bin1738",
+      "phone": "9848859416",
+      "address": "Nayabazar",
+      "postalCode": "1235"
+    },
+    {
+      "id": "5e07",
+      "firstName": "Test",
+      "lastName": "Test",
+      "email": "test@test.com",
+      "password": "Test@123",
+      "phone": "9812345678",
+      "address": "TestTown",
+      "postalCode": "1234"
+    },
+    {
+      "id": "cfa5",
+      "firstName": "Test2",
+      "lastName": "Test",
+      "email": "test2@test.com",
+      "password": "Test@123",
+      "phone": "9812345679",
+      "address": "TestTown",
+      "postalCode": "1234"
+    }
+  ],
+  "registered_users": [
+    {
+      "id": "cbf8",
+      "firstName": "Roshan",
+      "lastName": "Shrestha",
+      "email": "roshan.stha399@gmail.com",
+      "password": "Roshan@1",
+      "phone": "9862264677",
+      "address": "Nayabazar",
+      "postalCode": "1234",
+      "role": "superadmin"
+    },
+    {
+      "id": "185e",
+      "firstName": "Roshan",
+      "lastName": "Shrestha",
+      "email": "rwasanstha@gmail.com",
+      "password": "Roshan@1",
+      "phone": "9813676934",
+      "address": "Nayabazar",
+      "postalCode": "1234"
+    },
+    {
+      "id": "276b",
+      "firstName": "Nabin",
+      "lastName": "Joshi",
+      "email": "nabinjoshi400@gmail.com",
+      "password": "N@bin1738",
+      "phone": "9848859416",
+      "address": "Nayabazar",
+      "postalCode": "1235"
+    },
+    {
+      "id": "5e07",
+      "firstName": "Test",
+      "lastName": "Test",
+      "email": "test@test.com",
+      "password": "Test@123",
+      "phone": "9812345678",
+      "address": "TestTown",
+      "postalCode": "1234"
+    }
+  ]
+}

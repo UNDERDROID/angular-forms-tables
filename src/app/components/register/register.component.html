@@ -1,0 +1,83 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="d-flex justify-content-end">
+            <button routerLink="/login" type="button" class="btn btn-primary"> Go Back</button>
+           
+        </div>
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg">
+          <div class="card-header text-center bg-primary text-white">
+            <h3>Register</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label for="firstName" class="form-label">First Name:</label>
+                <input id="firstName" formControlName="firstName" type="text" class="form-control" />
+                <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-danger">
+                  First name is required.
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name:</label>
+                <input id="lastName" formControlName="lastName" type="text" class="form-control" />
+                <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger">
+                  Last name is required.
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input id="email" formControlName="email" type="email" class="form-control" />
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger">
+                  Enter a valid email (must contain "#&64").
+                </div>
+              </div>
+            
+              <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input id="password" formControlName="password" type="password" class="form-control" />
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+                  Password must be at least 8 characters long, contain 1 uppercase letter, and 1 special character.
+                </div>
+              </div>
+            
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number:</label>
+                <input pattern="^[0-9]+$" id="phone" formControlName="phone" type="text" class="form-control" />
+                <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="text-danger">
+                  Enter a valid phone number (either "+977" followed by 10 digits or just 10 digits).
+                </div>
+              </div>
+
+
+              
+              <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <input id="address" formControlName="address" type="text" class="form-control" />
+                <div *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched" class="text-danger">
+                  Address is required.
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="postalCode" class="form-label">Postal Code:</label>
+                <input id="postalCode" formControlName="postalCode" type="text" class="form-control" />
+                <div *ngIf="registerForm.get('postalCode')?.invalid && registerForm.get('postalCode')?.touched" class="text-danger">
+                  Postal code is required.
+                </div>
+              </div>
+            
+              <div *ngIf="registrationError" class="alert alert-danger mt-3">
+                {{ registrationError }}
+              </div>
+              
+              <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
