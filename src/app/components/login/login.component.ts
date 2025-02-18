@@ -21,30 +21,39 @@ constructor(private fb: FormBuilder, private userServvice: UserService, private 
 }
 
 ngOnInit(){
-localStorage.removeItem('user')
-  this.userServvice.getRegisteredUsers().subscribe(res =>{
- this.registeredUserList = res
- 
+localStorage.removeItem('userId')
+  this.userServvice.getRegisteredUsers().subscribe({
+    next: (res) =>{
+ this.registeredUserList = res;
+ console.log('Registered users:', this.registeredUserList);
+    },
+    error: (err) => {
+      console.error('Error fetching registered users:', err);
+      alert('Failed to fetch registered users.');
+    }
 })
 }
 
 login(){
 if(this.loginForm.valid){
-  let email = this.loginForm?.get('email')?.value
+  console.log('Form is valid');
+  const email = this.loginForm?.get('email')?.value
+  const password = this.loginForm?.get('password')?.value
   try {
-    if(!email){
+    if(!email || !password){
       alert("Something Went Wrong");
       return;
     }
-    let loggedInUser = this.registeredUserList.find(user => user.email == email)
+    const loggedInUser = this.registeredUserList.find(user => user.email == email)
 
     if(loggedInUser){
-      let hasCorrectPassword = loggedInUser.password == this.loginForm.get('password')?.value
+      const hasCorrectPassword = loggedInUser.password === password;
       if(hasCorrectPassword){
-        localStorage.setItem('user', JSON.stringify(loggedInUser));
+        localStorage.setItem('user', JSON.stringify({ id: loggedInUser.id, role: loggedInUser.role }));
+        console.log('correct pw')
         this.userServvice.setCurrentUser(loggedInUser);
-        this.router.navigateByUrl('/home')
-        console.log(loggedInUser)
+        this.router.navigateByUrl('/home');
+        console.log(loggedInUser);
       }else{
         alert("Something Went Wrong");
         return;
@@ -59,6 +68,8 @@ if(this.loginForm.valid){
     alert("Login failed")
   }
 
+  }else{
+    console.log("Form is invalid");
   }
 }
 

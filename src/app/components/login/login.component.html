@@ -3,7 +3,7 @@
       <div class="card-body">
         <h3 class="card-title text-center mb-4">Login</h3>
         
-        <form [formGroup]="loginForm">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input formControlName="email" type="text" class="form-control" id="username" placeholder="Enter your username" required>
@@ -15,7 +15,7 @@
           </div>
           
           <div class="d-flex justify-content-between align-items-center">
-            <button (click)="login()" type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
           </div>
         </form>
         

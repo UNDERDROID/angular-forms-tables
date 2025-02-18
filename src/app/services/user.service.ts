@@ -10,6 +10,7 @@ import { EmailValidator } from '@angular/forms';
 export class UserService {
   private apiUrl = 'http://localhost:3000'
   private user = JSON.parse(localStorage.getItem('user') || '{}');
+  private userId = localStorage.getItem('userId');
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +22,13 @@ export class UserService {
     // Check if phone exists
     checkPhone(phone: string): Observable<user[]> {
       return this.http.get<user[]>(`${this.apiUrl}/users?phone=${phone}`);
+    }
+
+    getCurrentUser(): Observable<user> {
+      if (this.userId) {
+        return this.http.get<user>(`${this.apiUrl}/users/${this.userId}`);
+      }
+      throw new Error('No user logged in');
     }
 
   addUser(user: any): Observable<any> {
@@ -39,7 +47,7 @@ export class UserService {
   }
 
   isSuperAdmin(): boolean{
-    return this.user.role==='superadmin';
+    return this.user?.role==='superadmin';
   }
   
 // Fetch users only if the logged-in user is a superadmin
@@ -52,8 +60,8 @@ getSuperAdminUsers(): Observable<any> {
 }
 
 setCurrentUser(user: any) {
-  this.user = user;
-  localStorage.setItem('user', JSON.stringify(user));
+  this.user = {id: user.id, role: user.role};
+  localStorage.setItem('user', JSON.stringify(this.user));
 }
 
 deleteUser(userId: number): Observable<any> {
