@@ -60,8 +60,16 @@ deleteUser(userId: number): Observable<any> {
   return this.http.delete(`${this.apiUrl}/users/${userId}`);
 }
 
-updateUser(userId: number, user: any): Observable<any> {
-  return this.http.put<any>(`${this.apiUrl}/users/${userId}`, user);
+updateUser(userId: string, updateUser: any): Observable<any> {
+  return this.http.put<any>(`${this.apiUrl}/users/${userId}`, updateUser);
+}
+
+updateRegisteredUser(userId: number, updatedUser: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}/registered_users/${userId}`, updatedUser);
+}
+
+deleteRegisteredUser(userId: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/registered_users/${userId}`);
 }
 
 }

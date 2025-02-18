@@ -24,8 +24,8 @@ updateForm: FormGroup
 constructor(private userService: UserService, private router: Router, private fb: FormBuilder){
   // Initialize the form
   this.updateForm = this.fb.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
+    firstName: ['', [Validators.required, Validators.minLength(3)]],
+    lastName: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required]],
     address: ['', [Validators.required]],
@@ -108,27 +108,92 @@ if (modalElement) {
 // Update user
 updateUser(): void {
   if (this.updateForm.invalid) {
-    return;
+    return; // Exit if the form is invalid
   }
 
   const updatedUser = { ...this.selectedUser, ...this.updateForm.value };
 
-  this.userService.updateUser(updatedUser.id, updatedUser).subscribe(
+  this.userService.updateUser(updatedUser.id, updatedUser).subscribe(() => {
+    this.loadUsers(); // Reload users
+    this.loadRegisteredUsers(); // Reload registered users if needed
+
+    // Close the modal after update is successful
+    const modalElement = document.getElementById('updateUserModal');
+    if (modalElement) {
+      const modal = window.bootstrap.Modal.getInstance(modalElement); // Get the current modal instance
+      if (modal) {
+        modal.hide(); // Hide the modal
+      }
+    }
+  }, error => {
+    console.error('Error updating user:', error);
+  });
+}
+
+
+//Update registered user
+openUpdateModalForRegisteredUser(user: any): void {
+  this.selectedUser = user; // Store the selected user in a class variable
+  this.updateForm.patchValue({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
+    postalCode: user.postalCode
+  });
+
+  // Find the modal element and display it
+  const modalElement = document.getElementById('updateRegisteredUserModal');
+  if (modalElement) {
+    const modal = new window.bootstrap.Modal(modalElement);
+    modal.show();
+  } else {
+    console.error('Modal element not found');
+  }
+}
+
+updateRegisteredUser(): void {
+  if (this.updateForm.invalid) {
+    return; // If the form is invalid, exit early
+  }
+
+  // Merge the selected user's existing data with the new form values
+  const updatedUser = { ...this.selectedUser, ...this.updateForm.value };
+
+  this.userService.updateRegisteredUser(updatedUser.id, updatedUser).subscribe(
     () => {
-      this.loadUsers(); // Reload the user list after updating
-      const modalElement = document.getElementById('updateUserModal');
+      this.loadRegisteredUsers(); // Reload the list of registered users to show the updated information
+
+      // Hide the modal after a successful update
+      const modalElement = document.getElementById('updateRegisteredUserModal');
       if (modalElement) {
         const modal = new window.bootstrap.Modal(modalElement);
-        modal.hide(); // Hide the modal after update
+        modal.hide();
       } else {
         console.error('Modal element not found');
       }
     },
     (error) => {
-      console.error('Error updating user:', error);
+      console.error('Error updating registered user:', error); // Handle any errors
     }
   );
 }
+
+deleteRegisteredUser(userId: number): void {
+  if (confirm("Are you sure you want to delete this registered user?")) {
+    this.userService.deleteRegisteredUser(userId).subscribe(() => {
+      this.loadRegisteredUsers(); // Reload the registered users after deletion
+    });
+  }
+}
+
+loadRegisteredUsers(): void {
+  this.userService.getRegisteredUsers().subscribe((data) => {
+    this.registeredUsers = data;
+  });
+}
+
 
 
 logout(){

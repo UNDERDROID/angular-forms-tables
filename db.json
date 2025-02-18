@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "cbf8",
-      "firstName": "Roshan",
+      "firstName": "Rochan",
       "lastName": "Shrestha",
       "email": "roshan.stha399@gmail.com",
       "password": "Roshan@1",
@@ -36,7 +36,7 @@
       "lastName": "Test",
       "email": "test2@test.com",
       "password": "Test@123",
-      "phone": "9812345679",
+      "phone": "9812345671",
       "address": "TestTown",
       "postalCode": "1234"
     }
@@ -59,19 +59,9 @@
       "lastName": "Shrestha",
       "email": "rwasanstha@gmail.com",
       "password": "Roshan@1",
-      "phone": "9813676934",
+      "phone": "9862264677",
       "address": "Nayabazar",
       "postalCode": "1234"
-    },
-    {
-      "id": "276b",
-      "firstName": "Nabin",
-      "lastName": "Joshi",
-      "email": "nabinjoshi400@gmail.com",
-      "password": "N@bin1738",
-      "phone": "9848859416",
-      "address": "Nayabazar",
-      "postalCode": "1235"
     },
     {
       "id": "5e07",
