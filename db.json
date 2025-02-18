@@ -39,6 +39,28 @@
       "phone": "9812345671",
       "address": "TestTown",
       "postalCode": "1234"
+    },
+    {
+      "id": "96ba",
+      "firstName": "Meow",
+      "lastName": "Meow",
+      "email": "meow@meowmail.com",
+      "password": "Meow@123",
+      "phone": "9800000000",
+      "address": "MeowTown",
+      "postalCode": "1235",
+      "role": "user"
+    },
+    {
+      "id": "de33",
+      "firstName": "Meow2",
+      "lastName": "Meow",
+      "email": "meow2@meowmail.com",
+      "password": "Meow@123",
+      "phone": "9800000001",
+      "address": "MeowTown",
+      "postalCode": "1235",
+      "role": "user"
     }
   ],
   "registered_users": [

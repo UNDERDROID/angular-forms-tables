@@ -1,7 +1,5 @@
 <div class="container mt-4">
-    <!-- Button to open the modal -->
    
-  
   <!-- Modal for selecting a user -->
   <div class="modal fade" id="userSelectModal" tabindex="-1" aria-labelledby="userSelectModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -33,9 +31,97 @@
   <button type="button" class="btn btn-primary" id="logoutButton" (click)="logout()">Logout</button>
 </div>
 
+
+
+  <!-- Modal Structure -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addUserModalLabel">Register</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addUserForm" (ngSubmit)="addUser()">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name:</label>
+              <input id="firstName" formControlName="firstName" type="text" class="form-control" />
+              <div *ngIf="addUserForm.get('firstName')?.invalid && addUserForm.get('firstName')?.touched" class="text-danger">
+                First name is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name:</label>
+              <input id="lastName" formControlName="lastName" type="text" class="form-control" />
+              <div *ngIf="addUserForm.get('lastName')?.invalid && addUserForm.get('lastName')?.touched" class="text-danger">
+                Last name is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input id="email" formControlName="email" type="email" class="form-control" />
+              <div *ngIf="addUserForm.get('email')?.invalid && addUserForm.get('email')?.touched" class="text-danger">
+                Enter a valid email (must contain '&#64;').
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password:</label>
+              <input id="password" formControlName="password" type="password" class="form-control" />
+              <div *ngIf="addUserForm.get('password')?.invalid && addUserForm.get('password')?.touched" class="text-danger">
+                Password must be at least 8 characters long, contain 1 uppercase letter, and 1 special character.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number:</label>
+              <input pattern="^[0-9]+$" id="phone" formControlName="phone" type="text" class="form-control" />
+              <div *ngIf="addUserForm.get('phone')?.invalid && addUserForm.get('phone')?.touched" class="text-danger">
+                Enter a valid phone number (either "+977" followed by 10 digits or just 10 digits).
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">Address:</label>
+              <input id="address" formControlName="address" type="text" class="form-control" />
+              <div *ngIf="addUserForm.get('address')?.invalid && addUserForm.get('address')?.touched" class="text-danger">
+                Address is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="postalCode" class="form-label">Postal Code:</label>
+              <input id="postalCode" formControlName="postalCode" type="text" class="form-control" />
+              <div *ngIf="addUserForm.get('postalCode')?.invalid && addUserForm.get('postalCode')?.touched" class="text-danger">
+                Postal code is required.
+              </div>
+            </div>
+
+            <div *ngIf="registrationError" class="alert alert-danger mt-3">
+              {{ registrationError }}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="addUserForm.invalid">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="container mt-4">
     <!-- Users Table -->
-    <h2 class="mb-3">Users</h2>
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="mb-3">Users</h2>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+        Add New User
+      </button>
+    </div>
+    
     <table class="table table-bordered table-hover">
       <thead class="table-dark">
         <tr>

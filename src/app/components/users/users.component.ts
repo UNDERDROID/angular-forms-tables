@@ -3,7 +3,7 @@ import { UserService } from '../../services/user.service';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { user } from '../register/users';
 
 @Component({
   selector: 'app-users',
@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit{
-users: any []=[]
+users: any[]=[]
 registeredUsers: any []=[]
 selectedUser: any = null;
 
@@ -20,6 +20,9 @@ selectedUser: any = null;
 // ]
 
 updateForm: FormGroup
+addUserForm: FormGroup
+registrationError:string = ''
+newUser:user[] = []
 
 constructor(private userService: UserService, private router: Router, private fb: FormBuilder){
   // Initialize the form
@@ -30,6 +33,17 @@ constructor(private userService: UserService, private router: Router, private fb
     phone: ['', [Validators.required]],
     address: ['', [Validators.required]],
     postalCode: ['', [Validators.required]]
+  })
+
+  this.addUserForm = this.fb.group({
+    firstName: ['', [Validators.required, Validators.minLength(3)]],
+    lastName: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(63)]],
+    password: ['', [Validators.required,Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).+$/)]],
+    phone: ['', [Validators.required, Validators.pattern((/^(\+977\d{10}|\d{10})$/))]],
+    address: ['', Validators.required],
+    postalCode: ['', Validators.required],
+    role: ['user', Validators.required]
   })
 }
 
@@ -47,6 +61,53 @@ this.userService.getRegisteredUsers().subscribe((data)=>{
 }
 selectUser(user: any): void{
   this.selectedUser=user;
+}
+
+addUser(){
+  if (this.addUserForm.valid) {
+    const newUser: any = this.addUserForm.value;
+
+    this.userService.checkEmail(this.addUserForm.get('email')?.value).subscribe(
+      (emailResults) => {
+        if(emailResults.length>0){
+          this.registrationError='Email already exists'
+        }else{
+          this.userService.checkPhone(newUser.phone).subscribe(
+            (phoneResults)=>{
+              if(phoneResults.length>0){
+                this.registrationError='Phone no already used'
+              }else{
+                this.userService.addUser(newUser).subscribe(
+                  (response) =>{
+                    console.log('User added');
+                    this.newUser.push(response);
+                    this.registrationError=''
+                    this.addUserForm.reset()
+            
+                this.newUser.push(newUser);
+                this.loadUsers()
+            
+              },
+              (error) => {
+                console.error('Error adding user:', error);
+                this.registrationError = 'An error occurred. Please try again.';
+              }
+            );
+          }
+        },
+        (error) => {
+          console.error('Error checking phone:', error);
+          this.registrationError = 'An error occurred while checking phone number.';
+        }
+      );
+    }
+  },
+  (error) => {
+    console.error('Error checking email:', error);
+    this.registrationError = 'An error occurred while checking email.';
+  }
+);
+}
 }
 
 addUserToRegisteredUsers(): void{
